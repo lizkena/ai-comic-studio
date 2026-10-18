@@ -482,6 +482,15 @@ def select_ab_winner(test_id, payload: dict):
     return ab_testing.select_winner(test_id, variant_id, payload.get('notes', ''))
 
 
+@app.post('/api/ab-test/{test_id}/apply')
+def apply_ab_variant(test_id, payload: dict):
+    from . import ab_testing
+    variant_id = payload.get('variant_id')
+    if not variant_id:
+        raise ValueError('variant_id 必填')
+    return ab_testing.apply_variant(test_id, variant_id)
+
+
 @app.get('/api/projects/{ident}/ab-tests')
 def project_ab_tests(ident):
     from . import ab_testing

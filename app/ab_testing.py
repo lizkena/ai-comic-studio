@@ -148,6 +148,33 @@ def select_winner(test_id, variant_id, notes=''):
     return test
 
 
+def apply_variant(test_id, variant_id):
+    """把某个已完成变体的结果写回项目镜头（复用任务结果应用逻辑，保留旧视频版本）。"""
+    test = get_ab_test(test_id)
+    variant = next((v for v in test['variants'] if v['id'] == variant_id), None)
+    if not variant:
+        raise KeyError(variant_id)
+    if variant.get('status') != 'completed' or not variant.get('result'):
+        raise ValueError('该变体尚未完成，无法应用')
+
+    project = store.get('projects', test['project_id'])
+    job = {
+        'id': 'ab_apply_' + test_id,
+        'project_id': test['project_id'],
+        'stage': 'storyboard',
+        'kind': 'text',
+        'target_id': test['segment_id'],
+        'source_revision': project['revision'],
+        'source_snapshot': {'outputs': project.get('outputs', {})},
+        'applied_by_user': True,
+        'logs': [],
+    }
+    jobs_module.apply_result(job, variant['result'])
+    test['applied'] = {'variant_id': variant_id, 'at': store.now()}
+    _save_ab_test(test)
+    return test
+
+
 def get_ab_test_statistics(project_id=None):
     """各模式胜率、平均评分、平均耗时（由真实的变体时间戳计算）。"""
     tests = list_ab_tests(project_id)
