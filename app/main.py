@@ -345,8 +345,78 @@ def set_cinematic_mode(ident, payload: dict):
 @app.post('/api/projects/{ident}/storyboard/review')
 def review_storyboard(ident, payload: dict):
     from . import storyboard_review
-    rules = payload.get('rules', 'core')
-    return storyboard_review.review_project_storyboard(ident, rules)
+    p = store.get('projects', ident)
+    settings = p.get('settings', {})
+    rules = payload.get('rules', settings.get('review_rules_mode', 'core'))
+    enabled = payload.get('enabled_rules', settings.get('enabled_review_rules'))
+    return storyboard_review.review_project_storyboard(ident, rules, enabled)
+
+
+@app.get('/api/storyboard/review/rules')
+def review_rule_catalog():
+    from . import storyboard_review
+    return storyboard_review.get_rule_catalog()
+
+
+@app.get('/api/projects/{ident}/settings/review-rules')
+def get_review_rules(ident):
+    p = store.get('projects', ident)
+    settings = p.get('settings', {})
+    return {'rules_mode': settings.get('review_rules_mode', 'core'),
+            'enabled_rules': settings.get('enabled_review_rules', [])}
+
+
+@app.put('/api/projects/{ident}/settings/review-rules')
+def set_review_rules(ident, payload: dict):
+    p = store.get('projects', ident)
+    settings = p.setdefault('settings', {})
+    mode = payload.get('rules_mode', 'core')
+    if mode not in ('core', 'full', 'custom'):
+        raise ValueError('rules_mode 必须是 core/full/custom')
+    settings['review_rules_mode'] = mode
+    if mode == 'custom':
+        enabled = payload.get('enabled_rules', [])
+        if not isinstance(enabled, list) or not all(isinstance(r, int) and 1 <= r <= 19 for r in enabled):
+            raise ValueError('enabled_rules 必须是 1-19 的整数数组')
+        settings['enabled_review_rules'] = enabled
+    return store.save_project(p, p['revision'], '修改审查规则配置')
+
+
+@app.get('/api/projects/{ident}/settings/expert-mode')
+def get_expert_mode(ident):
+    p = store.get('projects', ident)
+    return {'enabled': p.get('settings', {}).get('expert_mode', False),
+            'export_markdown': p.get('settings', {}).get('export_markdown', True)}
+
+
+@app.put('/api/projects/{ident}/settings/expert-mode')
+def set_expert_mode(ident, payload: dict):
+    p = store.get('projects', ident)
+    settings = p.setdefault('settings', {})
+    settings['expert_mode'] = bool(payload.get('enabled', False))
+    settings['export_markdown'] = bool(payload.get('export_markdown', True))
+    return store.save_project(p, p['revision'], '切换专家模式')
+
+
+@app.get('/api/projects/{ident}/storyboard/markdown')
+def storyboard_markdown(ident):
+    from . import markdown_export
+    p = store.get('projects', ident)
+    return {'markdown': markdown_export.generate_markdown_storyboard(p),
+            'filename': f"{p.get('name', '未命名')}_分镜脚本.md"}
+
+
+@app.get('/api/projects/{ident}/storyboard/markdown/download')
+def storyboard_markdown_download(ident):
+    from . import markdown_export
+    from fastapi.responses import Response
+    from urllib.parse import quote
+    p = store.get('projects', ident)
+    content = markdown_export.generate_markdown_storyboard(p)
+    filename = f"{p.get('name', '未命名')}_分镜脚本.md"
+    # 头部必须 latin-1 可编码：ASCII 兜底名 + RFC 5987 的 UTF-8 文件名
+    return Response(content=content.encode('utf-8'), media_type='text/markdown; charset=utf-8',
+                    headers={'Content-Disposition': f"attachment; filename=\"storyboard.md\"; filename*=UTF-8''{quote(filename)}"})
 
 
 @app.post('/api/projects/{ident}/segments/{segment_id}/enhance')
