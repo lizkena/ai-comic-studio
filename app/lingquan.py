@@ -227,7 +227,8 @@ async def image_params(p, reference):
     meta = await detail(p)
     names = {x['name'] for x in meta.get('params', [])}
     params = copy.deepcopy(p.get('lingquan_params') or {})
-    if 'size' in names: params.setdefault('size', p.get('size') or 'auto')
+    if 'size' in names and not ({'aspect_ratio', 'resolution'} & names):
+        params.setdefault('size', p.get('size') or 'auto')
     if 'quality' in names: params.setdefault('quality', 'auto')
     refs = reference if isinstance(reference, list) else [reference] if reference else []
     if refs:
