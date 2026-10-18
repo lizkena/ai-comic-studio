@@ -419,6 +419,137 @@ def storyboard_markdown_download(ident):
                     headers={'Content-Disposition': f"attachment; filename=\"storyboard.md\"; filename*=UTF-8''{quote(filename)}"})
 
 
+REVIEW_RULE_PRESETS = [
+    {'id': 'core', 'name': '核心规则（8条）', 'description': '最常用的8条核心规则，覆盖光线、机位、运镜、表演、空间约束',
+     'rules': [1, 4, 6, 7, 10, 11, 16, 17]},
+    {'id': 'lighting_only', 'name': '仅光线与色彩', 'description': '专注检查光源动机、纵深和色彩方案', 'rules': [1, 2, 3]},
+    {'id': 'camera_only', 'name': '仅机位与运镜', 'description': '专注检查机位角度、景别、运镜方式', 'rules': [4, 5, 6, 7, 8]},
+    {'id': 'performance_only', 'name': '仅表演与人物', 'description': '专注检查表演外化、群像管理', 'rules': [9, 10, 13]},
+    {'id': 'continuity_only', 'name': '仅衔接与经济性', 'description': '专注检查镜头衔接、台词、音频、经济性', 'rules': [14, 15, 16, 17, 18, 19]},
+    {'id': 'full', 'name': '完整规则（19条）', 'description': '所有专业约束，适合高要求项目', 'rules': list(range(1, 20))},
+]
+
+
+@app.get('/api/review-rules/presets')
+def review_rule_presets():
+    return {'presets': REVIEW_RULE_PRESETS}
+
+
+@app.post('/api/projects/{ident}/settings/review-rules/apply-preset')
+def apply_review_rule_preset(ident, payload: dict):
+    preset_id = payload.get('preset_id')
+    preset = next((x for x in REVIEW_RULE_PRESETS if x['id'] == preset_id), None)
+    if not preset:
+        raise ValueError('未知预设：' + str(preset_id))
+    p = store.get('projects', ident)
+    settings = p.setdefault('settings', {})
+    if preset_id in ('core', 'full'):
+        settings['review_rules_mode'] = preset_id
+    else:
+        settings['review_rules_mode'] = 'custom'
+        settings['enabled_review_rules'] = list(preset['rules'])
+    return store.save_project(p, p['revision'], '应用审查规则预设：' + preset['name'])
+
+
+@app.get('/api/ab-test/statistics')
+def all_ab_test_statistics():
+    from . import ab_testing
+    return ab_testing.get_ab_test_statistics()
+
+
+@app.get('/api/ab-test/{test_id}')
+def get_ab_test(test_id):
+    from . import ab_testing
+    return ab_testing.get_ab_test(test_id)
+
+
+@app.post('/api/ab-test/{test_id}/rate')
+def rate_ab_variant(test_id, payload: dict):
+    from . import ab_testing
+    variant_id = payload.get('variant_id')
+    rating = payload.get('rating')
+    if not variant_id or rating is None:
+        raise ValueError('variant_id 与 rating 必填')
+    return ab_testing.rate_variant(test_id, variant_id, rating, payload.get('notes', ''))
+
+
+@app.post('/api/ab-test/{test_id}/select-winner')
+def select_ab_winner(test_id, payload: dict):
+    from . import ab_testing
+    variant_id = payload.get('variant_id')
+    if not variant_id:
+        raise ValueError('variant_id 必填')
+    return ab_testing.select_winner(test_id, variant_id, payload.get('notes', ''))
+
+
+@app.get('/api/projects/{ident}/ab-tests')
+def project_ab_tests(ident):
+    from . import ab_testing
+    return ab_testing.list_ab_tests(ident)
+
+
+@app.get('/api/projects/{ident}/ab-test/statistics')
+def project_ab_test_statistics(ident):
+    from . import ab_testing
+    return ab_testing.get_ab_test_statistics(ident)
+
+
+@app.post('/api/projects/{ident}/ab-test/create')
+def create_project_ab_test(ident, payload: dict):
+    from . import ab_testing
+    segment_id = payload.get('segment_id')
+    if not segment_id:
+        raise ValueError('segment_id 必填')
+    return ab_testing.create_ab_test(ident, segment_id, payload.get('test_name', ''), payload.get('description', ''))
+
+
+@app.post('/api/projects/{ident}/segments/{segment_id}/generate-markdown')
+def generate_segment_markdown(ident, segment_id):
+    from . import markdown_export
+    p = store.get('projects', ident)
+    segment = next((s for s in p.get('segments', []) if s['id'] == segment_id), None)
+    if not segment:
+        raise KeyError(segment_id)
+    shadow = {**p, 'segments': [segment]}
+    return {'markdown': markdown_export.generate_markdown_storyboard(shadow),
+            'segment_id': segment_id, 'title': segment.get('title', '未命名')}
+
+
+@app.get('/api/projects/{ident}/storyboard/markdown-status')
+def markdown_status(ident):
+    p = store.get('projects', ident)
+    outputs = p.get('outputs', {})
+    return {'exists': 'markdown_storyboard' in outputs,
+            'updated_at': outputs.get('markdown_storyboard_updated_at'),
+            'size': len(outputs.get('markdown_storyboard', ''))}
+
+
+@app.post('/api/projects/{ident}/batch-enhance')
+def batch_enhance(ident, payload: dict):
+    segment_ids = payload.get('segment_ids', [])
+    if not isinstance(segment_ids, list) or not segment_ids:
+        raise ValueError('segment_ids 必填')
+    p = store.get('projects', ident)
+    original = p.get('settings', {}).get('expert_mode', False)
+    p.setdefault('settings', {})['expert_mode'] = True
+    job_ids = []
+    try:
+        for segment_id in segment_ids:
+            if not any(s['id'] == segment_id for s in p.get('segments', [])):
+                continue
+            job = jobs.create(p, {
+                'kind': 'text',
+                'stage': 'storyboard',
+                'target_id': segment_id,
+                'instruction': '用专家模式（完整19条约束）重新生成这个镜头',
+                'preview': True,
+            })
+            job_ids.append(job['id'])
+    finally:
+        p['settings']['expert_mode'] = original
+    return {'total': len(segment_ids), 'created_jobs': len(job_ids), 'job_ids': job_ids}
+
+
 @app.post('/api/projects/{ident}/segments/{segment_id}/enhance')
 async def enhance_segment(ident, segment_id):
     """用电影感核心约束重新生成单个 segment（预览稿，不直接覆盖）。"""

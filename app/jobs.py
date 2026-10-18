@@ -101,6 +101,8 @@ def _create(p, payload):
            'source_revision':p['revision'],'source_snapshot':copy.deepcopy(p),'logs':[], 'attempt':0,
            'auto':payload.get('auto',False),'remaining':payload.get('remaining',0),'workflow_options':copy.deepcopy(payload.get('workflow_options',{})),
            'skill_snapshots':copy.deepcopy(skill_snapshots)}
+    if payload.get('ab_test'):
+        job['ab_test']=copy.deepcopy(payload['ab_test'])
     if kind != 'assembly':
         job['provider_snapshot'] = {k:copy.deepcopy(v) for k,v in provider.items() if k not in ('secret','ak_secret','sk_secret','api_key','access_key','secret_key')}
     if kind == 'video':
@@ -190,6 +192,11 @@ async def execute(ident):
                 log(job,'生成请求尚未提交：'+str(error)[:1800],status='failed',error=str(error)[:1800],submission_started=False,uncertain=False,**diagnostics)
             else:
                 log(job,str(error)[:1800],status='failed',error=str(error)[:1800],uncertain=bool(job.get('uncertain') or (job.get('submission_started') and not job.get('remote_id'))),**diagnostics)
+            if job.get('ab_test'):
+                try:
+                    from . import ab_testing
+                    ab_testing.update_ab_test_variant(job['ab_test']['test_id'],job['ab_test']['variant_id'],None,job_id=job['id'],error=str(error)[:300])
+                except Exception: pass
 
 
 async def run_text(job):
@@ -220,8 +227,38 @@ async def run_text(job):
             if attempt: raise
             context['validation_error']=str(error); context['request']+='\n修正上次格式错误，严格使用提供的结构。'
     log(job,'结构校验通过',result=result,usage=usage,request_snapshot=request)
+    if job.get('ab_test'):
+        # A/B 变体只记录结果供对比，不写入项目（否则三个变体会互相覆盖）
+        log(job,'A/B 变体结果已保存，未写入项目',pending_apply=True)
+        on_storyboard_job_complete(job)
+        return
     apply_result(job,result)
     log(job,'生成结果已自动更新到当前作品',pending_apply=False,applied_automatically=True,applied_at=store.now())
+    if stage=='storyboard': on_storyboard_job_complete(job)
+
+
+def on_storyboard_job_complete(job):
+    """分镜任务完成后的收尾：A/B 变体回填；专家模式导出 Markdown。失败不阻断任务。"""
+    try:
+        from . import ab_testing
+        if job.get('ab_test'):
+            ab_testing.update_ab_test_variant(job['ab_test']['test_id'],job['ab_test']['variant_id'],job.get('result'),job_id=job['id'])
+    except Exception as error:
+        try: log(job,'A/B 变体回填失败：'+str(error)[:300])
+        except Exception: pass
+    try:
+        if job.get('ab_test') or job.get('stage')!='storyboard': return
+        p=store.get('projects',job['project_id']); settings=p.get('settings',{})
+        if not (settings.get('expert_mode') and settings.get('export_markdown',True)): return
+        from . import markdown_export
+        content=markdown_export.generate_markdown_storyboard(p)
+        def apply(latest):
+            latest.setdefault('outputs',{})['markdown_storyboard']=content
+            latest['outputs']['markdown_storyboard_updated_at']=store.now()
+        mutate_project(job['project_id'],apply,'生成 Markdown 文字分镜')
+    except Exception as error:
+        try: log(job,'Markdown 导出失败：'+str(error)[:300])
+        except Exception: pass
 
 
 def apply_result(job,result):

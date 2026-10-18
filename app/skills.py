@@ -69,6 +69,7 @@ def set_default(stage, ident):
 def for_job(job, stage):
     """Resolve saved instructions rather than changing a running/retried job."""
     from .creation import genre_instruction, genre_label, CINEMATIC_CORE_RULES
+    from .cinematic_full_rules import FULL_CINEMATIC_RULES
 
     pinned=job.get('skill_snapshots',{}).get(stage)
     skill=copy.deepcopy(pinned) if pinned else load(stage,job.get('source_snapshot',{}).get('bindings',{}).get('skill_'+stage))
@@ -81,9 +82,14 @@ def for_job(job, stage):
         except Exception: settings={}
 
     prefix=''
-    # 电影感核心约束（仅分镜阶段，注入在最前）
-    if settings.get('cinematic_mode') and stage == 'storyboard':
-        prefix+=CINEMATIC_CORE_RULES+'\n\n'
+    # 专家模式（完整 19 条）优先于电影感模式（8 条核心），仅分镜阶段
+    if stage == 'storyboard':
+        if settings.get('expert_mode'):
+            prefix+=FULL_CINEMATIC_RULES+'\n\n'
+            skill=copy.deepcopy(skill)
+            skill['expert_mode']=True
+        elif settings.get('cinematic_mode'):
+            prefix+=CINEMATIC_CORE_RULES+'\n\n'
     # 题材指引
     genre_id=settings.get('genre_preset','')
     if genre_id and genre_id != 'custom':
