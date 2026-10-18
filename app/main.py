@@ -328,6 +328,50 @@ def set_project_genre(ident, payload: dict):
     return store.save_project(p, p['revision'], '修改项目题材')
 
 
+@app.get('/api/projects/{ident}/settings/cinematic-mode')
+def get_cinematic_mode(ident):
+    p = store.get('projects', ident)
+    return {'enabled': p.get('settings', {}).get('cinematic_mode', False)}
+
+
+@app.put('/api/projects/{ident}/settings/cinematic-mode')
+def set_cinematic_mode(ident, payload: dict):
+    p = store.get('projects', ident)
+    enabled = bool(payload.get('enabled', False))
+    p.setdefault('settings', {})['cinematic_mode'] = enabled
+    return store.save_project(p, p['revision'], '切换电影感模式')
+
+
+@app.post('/api/projects/{ident}/storyboard/review')
+def review_storyboard(ident, payload: dict):
+    from . import storyboard_review
+    rules = payload.get('rules', 'core')
+    return storyboard_review.review_project_storyboard(ident, rules)
+
+
+@app.post('/api/projects/{ident}/segments/{segment_id}/enhance')
+async def enhance_segment(ident, segment_id):
+    """用电影感核心约束重新生成单个 segment（预览稿，不直接覆盖）。"""
+    p = store.get('projects', ident)
+    segment = next((s for s in p.get('segments', []) if s['id'] == segment_id), None)
+    if not segment: raise KeyError(segment_id)
+
+    # 仅让本次任务的提交快照带上电影感开关，随后恢复，不写回项目
+    original = p.get('settings', {}).get('cinematic_mode', False)
+    p.setdefault('settings', {})['cinematic_mode'] = True
+    try:
+        job = jobs.create(p, {
+            'kind': 'text',
+            'stage': 'storyboard',
+            'target_id': segment_id,
+            'instruction': '用电影级镜头语言重新设计这个镜头，遵循核心8条约束',
+            'preview': True,
+        })
+    finally:
+        p['settings']['cinematic_mode'] = original
+    return jobs.public(job)
+
+
 @app.post('/api/providers/models')
 async def provider_models(payload:dict):
     return await connections.models(connections.prepare(payload))

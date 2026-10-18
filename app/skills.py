@@ -68,21 +68,30 @@ def set_default(stage, ident):
 
 def for_job(job, stage):
     """Resolve saved instructions rather than changing a running/retried job."""
-    from .creation import genre_instruction, genre_label
+    from .creation import genre_instruction, genre_label, CINEMATIC_CORE_RULES
 
     pinned=job.get('skill_snapshots',{}).get(stage)
     skill=copy.deepcopy(pinned) if pinned else load(stage,job.get('source_snapshot',{}).get('bindings',{}).get('skill_'+stage))
 
-    # 项目题材指引：注入快照与实时解析两条路径（题材随 revision 变化使任务缓存失效）
-    project_id=job.get('project_id')
-    if project_id:
-        try: genre_id=store.get('projects',project_id).get('settings',{}).get('genre_preset','')
-        except Exception: genre_id=''
-        if genre_id and genre_id != 'custom':
-            hint=genre_instruction(genre_id)
-            if hint:
-                skill=copy.deepcopy(skill)
-                skill['content']=f'【当前题材：{genre_label(genre_id)}】\n{hint}\n\n'+skill['content']
+    # 任务提交时的项目设定（快照优先；旧任务无快照时回读项目）
+    settings=job.get('source_snapshot',{}).get('settings')
+    if settings is None:
+        project_id=job.get('project_id')
+        try: settings=store.get('projects',project_id).get('settings',{}) if project_id else {}
+        except Exception: settings={}
+
+    prefix=''
+    # 电影感核心约束（仅分镜阶段，注入在最前）
+    if settings.get('cinematic_mode') and stage == 'storyboard':
+        prefix+=CINEMATIC_CORE_RULES+'\n\n'
+    # 题材指引
+    genre_id=settings.get('genre_preset','')
+    if genre_id and genre_id != 'custom':
+        hint=genre_instruction(genre_id)
+        if hint: prefix+=f'【当前题材：{genre_label(genre_id)}】\n{hint}\n\n'
+    if prefix:
+        skill=copy.deepcopy(skill)
+        skill['content']=prefix+skill['content']
     return skill
 
 
