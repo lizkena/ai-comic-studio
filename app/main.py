@@ -299,6 +299,35 @@ def provider_presets(): return presets.catalog()
 def set_settings(payload:dict): return providers.save_settings(payload)
 
 
+@app.get('/api/genres')
+def list_genres():
+    """返回所有可选题材。"""
+    return creation.GENRE_OPTIONS
+
+
+@app.get('/api/projects/{ident}/genre')
+def get_project_genre(ident):
+    p = store.get('projects', ident)
+    genre_preset = p.get('settings', {}).get('genre_preset', '')
+    return {'genre_preset': genre_preset, 'genre_label': p.get('settings', {}).get('genre', '')}
+
+
+@app.put('/api/projects/{ident}/genre')
+def set_project_genre(ident, payload: dict):
+    genre_preset = payload.get('genre_preset', '').strip()
+    if genre_preset and genre_preset != 'custom' and genre_preset not in creation.GENRE_IDS:
+        raise ValueError(f'未知题材: {genre_preset}')
+
+    p = store.get('projects', ident)
+    p.setdefault('settings', {})['genre_preset'] = genre_preset
+
+    # 自动填充 genre 字段（向后兼容）
+    if genre_preset and genre_preset != 'custom':
+        p['settings']['genre'] = creation.genre_label(genre_preset)
+
+    return store.save_project(p, p['revision'], '修改项目题材')
+
+
 @app.post('/api/providers/models')
 async def provider_models(payload:dict):
     return await connections.models(connections.prepare(payload))

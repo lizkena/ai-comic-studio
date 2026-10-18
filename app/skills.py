@@ -68,9 +68,22 @@ def set_default(stage, ident):
 
 def for_job(job, stage):
     """Resolve saved instructions rather than changing a running/retried job."""
+    from .creation import genre_instruction, genre_label
+
     pinned=job.get('skill_snapshots',{}).get(stage)
-    if pinned: return copy.deepcopy(pinned)
-    return load(stage,job.get('source_snapshot',{}).get('bindings',{}).get('skill_'+stage))
+    skill=copy.deepcopy(pinned) if pinned else load(stage,job.get('source_snapshot',{}).get('bindings',{}).get('skill_'+stage))
+
+    # 项目题材指引：注入快照与实时解析两条路径（题材随 revision 变化使任务缓存失效）
+    project_id=job.get('project_id')
+    if project_id:
+        try: genre_id=store.get('projects',project_id).get('settings',{}).get('genre_preset','')
+        except Exception: genre_id=''
+        if genre_id and genre_id != 'custom':
+            hint=genre_instruction(genre_id)
+            if hint:
+                skill=copy.deepcopy(skill)
+                skill['content']=f'【当前题材：{genre_label(genre_id)}】\n{hint}\n\n'+skill['content']
+    return skill
 
 
 def import_skill(payload):

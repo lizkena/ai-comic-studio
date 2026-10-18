@@ -80,3 +80,23 @@ def guidance(p, stage=None, visual_only=False):
         else: lines.append('来源为用户灵感。先明确故事方向，再根据用户选择展开人物、世界与剧本。')
         lines.append('类型与画风只指导创作表达，不覆盖用户明确要求保留的事实、剧情或对白。')
     return '\n'.join(lines)
+
+
+def genre_instruction(genre_id):
+    """返回指定题材的创作指引，找不到返回空字符串。"""
+    for gid, _name, instruction in GENRES:
+        if gid == genre_id:
+            return instruction
+    return ''
+
+
+def genre_label(genre_id):
+    """返回指定题材的中文名，找不到返回 genre_id 本身。"""
+    for gid, name, _instruction in GENRES:
+        if gid == genre_id:
+            return name
+    return genre_id
+
+
+GENRE_IDS = [gid for gid, _, _ in GENRES]
+GENRE_OPTIONS = [{'id': gid, 'label': name} for gid, name, _ in GENRES]
