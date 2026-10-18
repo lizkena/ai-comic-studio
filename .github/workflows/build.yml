@@ -1,0 +1,75 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10（与内置运行时同系）
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install backend dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Boot backend and smoke test
+        shell: pwsh
+        run: |
+          $proc = Start-Process -PassThru -NoNewWindow python -ArgumentList '-m','uvicorn','app.main:app','--host','127.0.0.1','--port','8799'
+          $ok = $false
+          try {
+            for ($i = 0; $i -lt 40; $i++) {
+              Start-Sleep -Seconds 1
+              try {
+                $health = Invoke-RestMethod -Uri 'http://127.0.0.1:8799/api/health' -TimeoutSec 5
+                if ($health.ok -and $health.name -eq 'AI漫剧工作台') { $ok = $true; break }
+              } catch {}
+            }
+            if (-not $ok) { throw '后端未在 40 秒内就绪，见上方日志' }
+            $boot = Invoke-RestMethod -Uri 'http://127.0.0.1:8799/api/bootstrap' -TimeoutSec 15
+            $skills = @($boot.skills)
+            Write-Output "bootstrap ok: projects=$(@($boot.projects).Count) skills=$($skills.Count)"
+            if ($skills.Count -lt 16) { throw "技能加载异常：仅 $($skills.Count) 个（应 >= 16）" }
+            $root = Invoke-WebRequest -Uri 'http://127.0.0.1:8799/' -TimeoutSec 15 -UseBasicParsing
+            if ($root.StatusCode -ne 200 -or $root.Content -notmatch 'AI漫剧工作台') { throw '前端入口页异常' }
+            Write-Output 'SMOKE OK: health + bootstrap(16 skills) + index'
+          } finally {
+            Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+          }
+
+      - name: Fetch pinned WebView2 SDK 1.0.4258.31（与发行包内置 DLL 同版本）
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri 'https://www.nuget.org/api/v2/package/Microsoft.Web.WebView2/1.0.4258.31' -OutFile "$env:RUNNER_TEMP\wv2.zip"
+          Expand-Archive -LiteralPath "$env:RUNNER_TEMP\wv2.zip" -DestinationPath "$env:RUNNER_TEMP\wv2" -Force
+          $candidates = Get-ChildItem -Recurse "$env:RUNNER_TEMP\wv2" -Include 'Microsoft.Web.WebView2.Core.dll','Microsoft.Web.WebView2.WinForms.dll'
+          $core = @($candidates | Where-Object { $_.Name -eq 'Microsoft.Web.WebView2.Core.dll' -and $_.FullName -match '\\net45\\' } | Select-Object -First 1)
+          if (-not $core) { $core = @($candidates | Where-Object { $_.Name -eq 'Microsoft.Web.WebView2.Core.dll' } | Select-Object -First 1) }
+          $winforms = @($candidates | Where-Object { $_.Name -eq 'Microsoft.Web.WebView2.WinForms.dll' -and $_.FullName -match '\\net45\\' } | Select-Object -First 1)
+          if (-not $winforms) { $winforms = @($candidates | Where-Object { $_.Name -eq 'Microsoft.Web.WebView2.WinForms.dll' } | Select-Object -First 1) }
+          if (-not $core -or -not $winforms) { throw '未在 SDK 包中找到所需 DLL' }
+          Write-Output "SDK_CORE=$($core.FullName)" >> $env:GITHUB_ENV
+          Write-Output "SDK_WINFORMS=$($winforms.FullName)" >> $env:GITHUB_ENV
+          Write-Output "Core=$($core.FullName)"
+          Write-Output "WinForms=$($winforms.FullName)"
+
+      - name: Compile launcher from current source（与 重新编译启动器.ps1 同参数）
+        shell: cmd
+        run: |
+          C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe /platform:x64 /out:Launcher.exe /win32icon:studio.ico /win32manifest:launcher.manifest /reference:System.Windows.Forms.dll /reference:System.Drawing.dll /reference:System.Web.Extensions.dll /reference:%SDK_CORE% /reference:%SDK_WINFORMS% launcher.cs
+          if errorlevel 1 exit /b 1
+          if not exist Launcher.exe exit /b 1
+          dir Launcher.exe
+
+      - name: Upload compiled launcher
+        uses: actions/upload-artifact@v4
+        with:
+          name: launcher-build
+          path: Launcher.exe
