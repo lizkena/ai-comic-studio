@@ -1,0 +1,34 @@
+/* Display-only folding: existing fields and media stay in their original cards. */
+#shell.shell{background-color:#141414!important;background-image:linear-gradient(#ffffff0d 1px,transparent 1px),linear-gradient(90deg,#ffffff0d 1px,transparent 1px)!important;background-size:64px 64px!important;background-position:0 0!important}
+.theme-dark .image-node.studio-managed-node{background:#202020!important;border:1px solid #454545!important;border-radius:16px;box-shadow:0 8px 24px #0005}
+.theme-dark .studio-managed-node>.node-head{background:#272727;border-radius:15px 15px 0 0;border-bottom:1px solid #414141}
+.theme-dark .studio-managed-node .studio-node-card{background:#202020}
+.studio-managed-node>.node-body{border-radius:0 0 15px 15px}
+.studio-managed-node .studio-node-card,.studio-managed-node textarea,.studio-managed-node [contenteditable]{scrollbar-width:thin;scrollbar-color:#626262 transparent}
+.studio-managed-node ::-webkit-scrollbar{width:6px;height:6px}
+.studio-managed-node ::-webkit-scrollbar-track{background:transparent}
+.studio-managed-node ::-webkit-scrollbar-thumb{background:#626262;border-radius:6px}
+.studio-managed-node .smart-node-floating-menu{left:0;right:0;top:auto;bottom:calc(100% + 8px);width:auto;max-width:none;height:auto;min-height:30px;box-sizing:border-box;flex-wrap:wrap;justify-content:center;white-space:normal;transform:none!important}
+.studio-managed-node>.node-head{display:flex!important;visibility:visible!important;opacity:1!important}
+.studio-managed-node>.node-head .node-title{display:flex!important;align-items:center;gap:8px;flex:1;min-width:0;visibility:visible!important;opacity:1!important;letter-spacing:0;text-transform:none;color:var(--text);font-size:12px}
+.studio-fold-type{flex:none;padding:3px 6px;border:1px solid var(--line);border-radius:5px;font-size:10px;color:var(--muted);font-weight:500}
+.studio-fold-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.studio-fold-toggle{flex:none;margin-left:auto;border:1px solid var(--line);border-radius:6px;background:var(--soft);color:var(--text);padding:4px 8px;font:11px inherit;cursor:pointer}
+.studio-fold-toggle:focus-visible{outline:2px solid #ff7755;outline-offset:2px}
+.studio-fold-summary{display:none}
+.studio-folded>.node-body{overflow:hidden!important;flex:1!important;min-height:0!important}
+.studio-folded .studio-node-card{height:100%!important;min-height:0!important;overflow:hidden!important;padding:10px!important}
+.studio-folded .studio-node-card>:not(.studio-fold-visible):not(.studio-fold-summary){display:none!important}
+.studio-folded .studio-fold-summary{display:block;color:var(--muted);font-size:12px;line-height:1.7;white-space:pre-wrap;overflow:hidden;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical}
+.studio-folded .studio-preview{flex:1;min-height:0;height:100%;overflow:hidden}
+.studio-folded .studio-preview img,.studio-folded .studio-preview video,.studio-folded .studio-output-video{width:100%;height:100%;max-height:195px;object-fit:contain}
+.image-node.studio-managed-node.studio-folded{min-height:0!important}
+.image-node.studio-identity-node.studio-folded{height:auto!important}
+.studio-folded .studio-error{display:block!important;max-height:44px;overflow:auto;margin:0}
+.studio-folded .studio-preview audio{width:100%}
+.studio-folded.studio-fold-video .studio-preview{aspect-ratio:var(--studio-fold-ratio,1.77778);height:auto!important;max-height:none!important;min-height:0!important;flex:none!important;width:100%}
+.studio-folded.studio-fold-video .studio-preview video{display:block;width:100%;height:100%;max-height:none;object-fit:contain}
+/* Fit the frame to the source, rather than fitting the source inside a fixed box. */
+.studio-managed-node .studio-preview{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;flex:none!important;width:100%;height:auto!important;min-height:0!important;max-height:none!important;overflow:hidden;aspect-ratio:auto!important}
+.studio-managed-node .studio-preview img,.studio-managed-node .studio-preview video{display:block;flex:none;width:100%!important;height:auto!important;max-width:100%!important;max-height:none!important;object-fit:contain}
+.studio-folded .studio-fold-summary:empty{display:none}

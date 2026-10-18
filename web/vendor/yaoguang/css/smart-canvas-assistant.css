@@ -1,0 +1,62 @@
+/* Uses the canvas theme; the desktop shell skin does not enter the canvas. */
+.canvas-mention-button{position:absolute;left:10px;bottom:8px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--muted);padding:4px 8px;font-size:11px;cursor:pointer}
+.prompt-input{padding-bottom:38px!important}
+.canvas-mention-button:hover,.canvas-skill-button:hover{color:var(--text);background:var(--soft)}
+.canvas-skill-control{position:relative;flex:none}
+.canvas-skill-button{height:var(--ctrl-height,30px);display:flex;align-items:center;gap:5px;border:1px solid transparent;border-radius:999px;background:transparent;color:var(--muted);padding:0 8px;cursor:pointer;font-size:var(--ctrl-font,11px)}
+.canvas-skill-button svg{width:13px;height:13px;flex:none}
+.canvas-skill-button span{max-width:105px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.canvas-skill-button.has-skill{color:var(--text);background:var(--soft);border-color:var(--line)}
+.canvas-skill-picker{position:absolute;bottom:calc(100% + 10px);left:0;width:310px;max-height:370px;overflow:auto;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 48px var(--shadow);padding:12px;z-index:95;cursor:default}
+.canvas-skill-picker[hidden],.annotation-editor[hidden]{display:none}
+.canvas-skill-heading{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px}
+.canvas-skill-heading strong{margin-right:auto}
+.canvas-skill-heading button{border:0;background:var(--soft);color:var(--muted);border-radius:6px;padding:5px 8px;cursor:pointer}
+.canvas-skill-option{display:flex;align-items:center;gap:10px;padding:9px;width:100%;text-align:left;color:var(--text);background:transparent;border:1px solid transparent;border-radius:9px;cursor:pointer;margin:3px 0}
+.canvas-skill-option:hover,.canvas-skill-option.is-active{background:var(--soft);border-color:var(--line)}
+.canvas-skill-option img,.canvas-skill-free{width:38px;height:38px;border-radius:8px;object-fit:cover;flex:none}
+.canvas-skill-free{display:grid;place-items:center;background:var(--soft);font-size:22px}
+.canvas-skill-option strong{display:block;font-size:12px;margin-bottom:4px}
+.canvas-skill-option small{display:block;color:var(--muted);font-size:10px;line-height:1.5}
+#canvasSkillStatus{font-size:10px;color:var(--muted);line-height:1.6;margin:10px 4px 2px}
+.mention-option.is-keyboard-active{outline:2px solid #7d9fff;outline-offset:-2px;background:var(--soft)}
+.mention-search-hint{font-size:10px;color:var(--muted);padding:4px 6px}
+.mention-option small{font-size:9px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.canvas-annotation-dialog{padding:0;border:1px solid var(--line);border-radius:18px;background:var(--panel);color:var(--text);width:min(1260px,94vw);max-width:94vw;height:min(840px,92vh);max-height:92vh;box-shadow:0 25px 100px rgba(0,0,0,.4)}
+.canvas-annotation-dialog::backdrop{background:rgba(4,10,20,.7);backdrop-filter:blur(6px)}
+.annotation-header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 24px;border-bottom:1px solid var(--line);height:88px;box-sizing:border-box}
+.annotation-header h2{font-size:18px;margin:0 0 6px;max-width:70vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.annotation-header p{font-size:12px;color:var(--muted);margin:0}
+.annotation-header>button{border:0;background:var(--soft);color:var(--text);border-radius:10px;width:36px;height:36px;font-size:24px;cursor:pointer;flex:none}
+.annotation-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;height:calc(100% - 88px);min-height:0}
+.annotation-image-stage{min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--page);overflow:hidden}
+.annotation-image-wrap{position:relative;display:flex;max-width:100%;max-height:100%;width:fit-content;height:fit-content}
+.annotation-image-wrap>img{display:block;max-width:100%;max-height:calc(min(840px,92vh) - 138px);object-fit:contain;user-select:none}
+.annotation-overlay{position:absolute;inset:0;cursor:crosshair;touch-action:none}
+.annotation-marker{position:absolute;border:2px solid #789dff;background:rgba(78,121,242,.13);padding:0;cursor:pointer;border-radius:3px;box-sizing:border-box;min-width:0;min-height:0}
+.annotation-marker.is-active{border-color:#ffbd68;background:rgba(255,181,81,.14)}
+.annotation-marker span{position:absolute;left:-12px;top:-12px;min-width:24px;height:24px;display:grid;place-items:center;padding:0 5px;box-sizing:border-box;border-radius:20px;background:#406ce0;color:#fff;font-size:12px;font-weight:700;box-shadow:0 2px 8px #0005}
+.annotation-marker.is-active span{background:#9a5708}
+.annotation-marker.is-point{border:0;background:none}
+.annotation-marker.is-resolved{opacity:.5;border-style:dashed}
+.annotation-sidebar{border-left:1px solid var(--line);padding:20px;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.annotation-list-title{display:flex;align-items:center;justify-content:space-between;font-size:14px}
+.annotation-list-title span{font-size:12px;color:var(--muted)}
+.annotation-editor{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--soft)}
+.annotation-editor>label{font-size:12px}
+.annotation-editor textarea{font:inherit;font-size:13px;line-height:1.6;resize:vertical;min-height:90px;max-height:220px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);width:100%;box-sizing:border-box}
+.annotation-check{display:flex;align-items:center;gap:5px;color:var(--muted)}
+.annotation-editor-actions,.annotation-note-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.annotation-editor-actions button,.annotation-note-actions button{border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--panel);color:var(--text);cursor:pointer;font-size:12px}
+.annotation-primary{border:0!important;border-radius:9px;background:#466bd7!important;color:#fff!important;padding:9px 12px;cursor:pointer;font-size:13px}
+.annotation-primary:disabled{opacity:.45;cursor:not-allowed}
+#annotationStatus,.annotation-empty{font-size:12px;line-height:1.6;color:var(--muted);margin:0}
+.annotation-list{display:flex;flex-direction:column;gap:10px}
+.annotation-note{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--soft)}
+.annotation-note.is-resolved{opacity:.65}
+.annotation-note-select{border:0;background:transparent;color:var(--text);padding:0;display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;font-size:13px;line-height:1.6;cursor:pointer;overflow-wrap:anywhere;white-space:pre-wrap}
+.annotation-number{background:#406ce0;color:white;width:22px;height:22px;flex:none;display:grid;place-items:center;border-radius:20px;font-size:11px}
+.annotation-note small{display:block;color:var(--muted);font-size:11px;margin:9px 0}
+.annotation-apply{margin-top:auto;display:flex;align-items:center;justify-content:space-between;flex:none}
+.canvas-annotation-dialog button:focus-visible,.canvas-skill-control button:focus-visible,.canvas-mention-button:focus-visible,.annotation-editor textarea:focus-visible{outline:2px solid #809fff;outline-offset:2px}
+@media(max-width:750px){.annotation-layout{grid-template-columns:1fr;grid-template-rows:minmax(160px,1fr) minmax(180px,1fr)}.annotation-sidebar{border-left:0;border-top:1px solid var(--line)}.annotation-image-stage{padding:16px}.annotation-image-wrap>img{max-height:calc((min(840px,92vh) - 88px)/2 - 32px)}.annotation-header{padding:14px}.annotation-header p{font-size:11px}}

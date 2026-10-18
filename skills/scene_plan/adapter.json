@@ -1,0 +1,12 @@
+{
+  "id": "scene_plan",
+  "name": "拆成每一场戏",
+  "stage": "scene_plan",
+  "version": "1.0.0",
+  "availability": "完整可用",
+  "tools": [
+    "text_api"
+  ],
+  "input": "项目设定与前序结构化对象",
+  "output": "本阶段 JSON 结构"
+}

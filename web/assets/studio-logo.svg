@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="漫剧创作台">
+  <rect width="128" height="128" rx="28" fill="#ff7957"/>
+  <path d="M36 89h23l-23 19Z" fill="#1b2229"/>
+  <rect x="23" y="27" width="82" height="68" rx="12" fill="#1b2229"/>
+  <rect x="30" y="34" width="17" height="23" rx="3" fill="#ff7957"/>
+  <rect x="30" y="64" width="17" height="24" rx="3" fill="#ff7957"/>
+  <rect x="54" y="34" width="44" height="54" rx="6" fill="#ff7957"/>
+  <path d="M68 47v29l21-14.5Z" fill="#fff9f3"/>
+</svg>

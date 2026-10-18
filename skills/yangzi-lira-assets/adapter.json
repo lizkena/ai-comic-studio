@@ -1,0 +1,18 @@
+{
+  "id": "yangzi-lira-assets",
+  "name": "洋子 · Lira 生图",
+  "stage": "assets",
+  "version": "3.3.1-adapter.1",
+  "availability": "完整可用",
+  "tools": [
+    "text_api",
+    "image_api"
+  ],
+  "input": "目标资产或镜头起始状态、项目画风、关联资产和可用参考图",
+  "output": "中文静态提示词 → 当前图像渠道生成图片",
+  "image_mode": "compiled",
+  "source_package": "AI STUDIO 洋子 V3.3.1 热修版",
+  "source_skills": [
+    "film-lira-assets"
+  ]
+}

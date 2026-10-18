@@ -1,0 +1,36 @@
+{
+  "id": "cinematic-storyboard",
+  "name": "电影感镜头 · 平台适配",
+  "version": "1.0.0-adapted1",
+  "enabled": true,
+  "priority": 10,
+  "stages": [
+    "storyboard"
+  ],
+  "task_types": [
+    "shot_prompt",
+    "video_prompt",
+    "breakdown",
+    "scene_prompt"
+  ],
+  "references": {
+    "shot_prompt": [
+      "references/space.md",
+      "references/language.md",
+      "references/lighting.md"
+    ],
+    "video_prompt": [
+      "references/space.md",
+      "references/video.md"
+    ],
+    "breakdown": [
+      "references/story.md",
+      "references/space.md"
+    ],
+    "scene_prompt": [
+      "references/space.md",
+      "references/lighting.md"
+    ]
+  },
+  "source": "https://bcn5c8r0cxod.feishu.cn/wiki/Vx8uwVsGzi7xcTkyZgAcGj02nqc"
+}

@@ -1,0 +1,6 @@
+.studio-organize-button{position:absolute;z-index:35;left:170px;top:22px;height:40px;padding:0 14px;border:1px solid #555;border-radius:9px;background:#252525;color:#eee;font:600 12px system-ui;cursor:pointer;box-shadow:0 3px 14px #0005;white-space:nowrap}
+.studio-organize-button:hover{background:#353535;border-color:#888}
+.studio-organize-button:focus-visible{outline:2px solid #9dcaff;outline-offset:3px}
+.studio-organize-button:disabled{opacity:.55;cursor:wait}
+.studio-organize-headings{position:absolute;inset:0;pointer-events:none;z-index:0}
+.studio-organize-heading{position:absolute;font:600 22px system-ui;color:#bbb;white-space:nowrap;letter-spacing:.5px;border-left:3px solid #777;padding-left:12px}

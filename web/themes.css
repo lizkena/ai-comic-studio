@@ -1,0 +1,52 @@
+.settings-hub{margin:0;max-width:1760px;min-width:0}
+.settings-layout{display:grid;grid-template-columns:172px minmax(0,1fr);gap:28px;align-items:start}
+@media(min-width:1700px){.settings-hub{padding:36px 80px}.settings-layout{grid-template-columns:208px minmax(0,1fr);gap:76px}}
+.settings-menu{display:grid;gap:7px;position:sticky;top:24px}
+.settings-menu button{justify-content:flex-start;padding:12px 14px;background:transparent;border-color:transparent;color:var(--muted)}
+.settings-menu button.active{background:#34261f;color:#ffad91;border-color:#6c4031}
+.settings-detail{min-width:0}.settings-detail>.content{padding:0}.settings-detail .settings-content{margin:0}.settings-detail .stagehead h1{font-size:21px}
+.theme-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:25px}
+.theme-option{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:18px;text-align:left;background:var(--panel);border-radius:12px}
+.theme-option.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.theme-preview{display:grid;grid-template-columns:22% 1fr;grid-template-rows:15px 1fr;gap:9px;width:100%;height:114px;border-radius:7px;padding:12px;border:1px solid #515b64;background:#151a1e}
+.theme-preview span:first-child{grid-row:span 2;background:#252d33;border-radius:3px}.theme-preview span:nth-child(2){background:#36424c;border-radius:3px}.theme-preview span:last-child{background:#222c33;border-radius:3px}
+.preview-light{background:#f4f3f0;border-color:#d0d2d3}.preview-light span:first-child{background:#e0e3e5}.preview-light span:nth-child(2){background:#bdc8cf}.preview-light span:last-child{background:#fff}
+.preview-system{background:linear-gradient(90deg,#f4f3f0 50%,#151a1e 50%)}.preview-system span:first-child{background:#dadfe2}.preview-system span:nth-child(2){background:#8b99a3}.preview-system span:last-child{background:linear-gradient(90deg,#fff 35%,#222c33 35%)}
+.theme-selection{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:12px}.selected .theme-selection{color:var(--accent)}
+.h3-status{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0}.h3-status>div{padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:10px}.h3-status strong{display:block;font-size:19px;margin:9px 0}.h3-actions{flex-wrap:wrap}.h3-path{overflow-wrap:anywhere}.h3-maintenance summary{cursor:pointer}
+:root[data-theme=light]{color-scheme:light;--bg:#f5f4f1;--panel:#fff;--raised:#eeefed;--line:#d5d8d9;--text:#20292f;--muted:#57636d;--accent:#bf4425;--green:#217859;--warn:#8a5b17}
+:root[data-theme=light] :is(.sidebar,.topbar,.inspector){background:#fbfaf8}
+:root[data-theme=light] dialog{background:var(--panel);border-color:#aeb8b8}
+:root[data-theme=light] :is(.sourcebox,.searchbox,.hardwarecard){background:#edf1ee;color:var(--text)}
+:root[data-theme=light] :is(.radiogrid label,.brandmark){color:var(--text)}
+:root[data-theme=light] :is(input,select,textarea,.scene textarea,.editor,.promptbox,.logs,.preset-model){background:#f7f8f6;color:var(--text);border-color:var(--line)}
+:root[data-theme=light] :is(.navitem,.settings-menu button){color:var(--muted)}
+:root[data-theme=light] :is(.navitem.active,.settings-menu button.active,.service-tabs button[aria-selected=true],.tagbar .active,.chaptertabs .active){background:#f9e8df;color:#9e341b;border-color:#e3ae98}
+:root[data-theme=light] .service-tabs button[aria-selected=true] .tab-count{background:#eed1c2;color:#7d2b18}
+:root[data-theme=light] .tab-count{background:#e6e9e7;color:#4f5a62}
+:root[data-theme=light] :is(.empty,.service-empty,.step-overview,.assetcard,.scene,.timelineitem,.inspector .panel,.createcard){background:#f0f2ef;border-color:var(--line)}
+:root[data-theme=light] :is(.assetimage,.segmentvisual,.asset-placeholder){background:#e3e9e6}
+:root[data-theme=light] :is(.herotext p,.segmentinfo p,.subtle,.workflowline b,.createcard h3,.step-overview .eyebrow,pre){color:var(--muted)}
+:root[data-theme=light] .hero{background:linear-gradient(110deg,#e8efeb,#f9f7f2);border-color:#c4d1ca}
+:root[data-theme=light] .herovisual{color:#edf3f1}
+:root[data-theme=light] .queuebar{background:#fafbf9f5}
+:root[data-theme=light] .notice{background:#fff4dc;color:#785016;border-color:#e4ca91}
+:root[data-theme=light] .notice.info{background:#eaf2f6;color:#315b6b;border-color:#bdd0da}
+:root[data-theme=light] .notice.error{background:#fbe9e5;color:#923b2a;border-color:#e1b4a8}
+:root[data-theme=light] .badge{background:#e8ecec;color:#465962}
+:root[data-theme=light] .badge.green{background:#e4f2e9;color:#226344}
+:root[data-theme=light] .badge.orange{background:#fff0d7;color:#835414}
+:root[data-theme=light] .badge.red{background:#fbe6e1;color:#943727}
+:root[data-theme=light] .badge.accent{background:#f9e5dc;color:#943a1e}
+:root[data-theme=light] button:hover{background:#e4e8e5;border-color:#9faba8}
+:root[data-theme=light] button.primary{color:#fff;background:var(--accent);border-color:var(--accent)}
+:root[data-theme=light] button.primary:hover{background:#a93a20}
+:root[data-theme=light] button.danger,:root[data-theme=light] .checkitem.error{color:#a53525}
+:root[data-theme=light] .checkitem{color:#835414}
+:root[data-theme=light] :is(.providericon,.avatar){background:#e2eee8;color:#38614e}
+:root[data-theme=light] .official-doc{color:#3f6377}
+:root[data-theme=light] #toast{background:#e5f4eb;color:#25543d;border-color:#94b6a0}
+:root[data-theme=light] #toast.error{background:#fce9e2;color:#903923;border-color:#d4a18e}
+@media(max-width:1050px){.settings-layout{grid-template-columns:1fr;gap:20px}.settings-menu{display:flex;position:static;gap:8px;border-bottom:1px solid var(--line);padding-bottom:14px}.settings-menu button{flex:1;justify-content:center}.theme-options{gap:12px}}
+@media(max-width:760px){.theme-options,.h3-status{grid-template-columns:1fr}.theme-preview{height:100px}.settings-menu button{padding:10px 8px}.settings-hub>.stagehead{margin-bottom:18px}}
+@media(max-width:640px){.sidebarfoot{display:flex;padding-top:8px}.sidebarfoot .localstatus,.sidebarfoot button:not(:first-child){display:none}.sidebarfoot .navitem{width:auto}}

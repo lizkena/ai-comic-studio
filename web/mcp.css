@@ -1,0 +1,10 @@
+.mcp-client-list{display:grid;gap:14px;max-width:1100px}
+.mcp-client-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+.mcp-client-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:60px}
+.mcp-client-heading h2{margin:0;font-size:18px}.mcp-client-heading p{margin:8px 0 0}
+.mcp-client-actions{display:flex;align-items:center;gap:20px;flex:none}
+.mcp-status{color:var(--muted);font-size:13px}.mcp-status.connected{color:#4bbb88}
+.mcp-client-card details{margin-top:14px;color:var(--muted);font-size:12px}.mcp-client-card summary{cursor:pointer;padding:6px 0}
+.mcp-config{white-space:pre-wrap;overflow-wrap:anywhere;padding:14px;border-radius:9px;background:var(--soft);color:var(--text);line-height:1.6;font-size:12px}
+.mcp-download{display:inline-block;color:var(--accent);padding:10px 0}
+@media(max-width:700px){.mcp-client-card{padding:16px}.mcp-client-heading{align-items:flex-start;flex-direction:column}.mcp-client-actions{width:100%;justify-content:space-between;gap:12px}}

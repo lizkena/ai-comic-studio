@@ -1,0 +1,27 @@
+# ---- 本地数据（隐私 + DPAPI 机器绑定，绝不上传）----
+data/
+
+# ---- 运行时（可由官方源重建，或从任一发行 ZIP 取得）----
+runtime/
+
+# ---- 编译产物（launcher.cs 经 重新编译启动器.ps1 或 CI 重建）----
+*.exe
+*.dll
+*.pdb
+
+# ---- Python 缓存 ----
+__pycache__/
+*.pyc
+*.pyo
+
+# ---- 日志与临时文件 ----
+*.log
+*.tmp
+*.bak
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ---- 编辑器 ----
+.vscode/
+.idea/

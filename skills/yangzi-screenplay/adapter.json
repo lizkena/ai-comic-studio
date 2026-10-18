@@ -1,0 +1,17 @@
+{
+  "id": "yangzi-screenplay",
+  "name": "洋子 · 专业剧本",
+  "stage": "script",
+  "version": "3.3.1-adapter.1",
+  "availability": "完整可用",
+  "tools": [
+    "text_api"
+  ],
+  "input": "指定小说章节、人物与世界设定、已确认分场、用户修改要求",
+  "output": "工作台剧本 JSON；按章节生成一集，保留来源与稳定 ID",
+  "source_package": "AI STUDIO 洋子 V3.3.1 热修版",
+  "source_skills": [
+    "film-screenplay",
+    "film-treatment"
+  ]
+}

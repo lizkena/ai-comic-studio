@@ -1,0 +1,12 @@
+{
+  "id": "assets",
+  "name": "图像资产",
+  "stage": "assets",
+  "version": "1.0.0",
+  "availability": "完整可用",
+  "tools": [
+    "image_api"
+  ],
+  "input": "项目设定与前序结构化对象",
+  "output": "图像文件"
+}

@@ -1,0 +1,142 @@
+{
+  "source": "用户提供的摇光无限画布-本地程序",
+  "scope": "仅无限画布前端及必需静态依赖",
+  "files": [
+    {
+      "file": "smart-canvas.html",
+      "source_sha256": "6f44f2bc8d0287abf1221742ce05c2457c080beaa2e39a7b4c9bc47bac062917"
+    },
+    {
+      "file": "js/smart-canvas.js",
+      "source_sha256": "9056c9f1d3201f0e2bc6202dba1fa49591a4909f06e4a81865753642e7362ec4"
+    },
+    {
+      "file": "js/smart-canvas-context.js",
+      "source_sha256": "91ec4788ae220c4b795be22f139444ff1d4f1cee33b4d4ada35127bd4c6ce87a"
+    },
+    {
+      "file": "js/canvas-group-appearance.js",
+      "source_sha256": "8aa40c4eacdaa13bbf49db1a3ff6f3f4eabc96b20a08935847df8b93295493e1"
+    },
+    {
+      "file": "js/smart-canvas-application-options.js",
+      "source_sha256": "82a9554ad1a4affec81ebb44c60d8c36072261a2c57b1560075b86b0b1da025b"
+    },
+    {
+      "file": "js/smart-canvas-applications.js",
+      "source_sha256": "24def61ead278e5f4ba8fdd0f9218b1a57c171f21d9c532db7076f07125e4ab1"
+    },
+    {
+      "file": "js/smart-canvas-assistant.js",
+      "source_sha256": "bfac91f02f383f3b03b57bc2918310996415b990d3e4ab500059acd3c073f2f4"
+    },
+    {
+      "file": "js/i18n.js",
+      "source_sha256": "809cce42e9787b7cc105dd8e0fdd3c2e78b7e2bcf116c58cad2b77bc208eed0b"
+    },
+    {
+      "file": "js/i18n-core.js",
+      "source_sha256": "622ef2950cb6d44784a421d14fa62c56063f1794aa5b03da66b79693f840cbbf"
+    },
+    {
+      "file": "js/touch-mouse.js",
+      "source_sha256": "44e687594d160a3dbc350da88b72bab68d4da079145fbb4de4fcc1cbffc84bd0"
+    },
+    {
+      "file": "css/smart-canvas.css",
+      "source_sha256": "914ee4130901a6af1e1837851617fc13caedb8afb412630051be926d5ef6c850"
+    },
+    {
+      "file": "css/smart-canvas-assistant.css",
+      "source_sha256": "428975a5f8706859ebd0b61193449ca6cd57c223168364495e184de92499d0d1"
+    },
+    {
+      "file": "css/canvas-agent.css",
+      "source_sha256": "d049fc32dc92dde7f8be5c9b29814aa9e6f2731083d2e4db250f025393f66e8d"
+    },
+    {
+      "file": "css/smart-canvas-applications.css",
+      "source_sha256": "ae585c23bdcceb87dc220a056747ff84f31f0f1d9d326b0f673d1ea308e88afd"
+    },
+    {
+      "file": "css/canvas-group-appearance.css",
+      "source_sha256": "ee55096b32e3c6932e34cffe04ac0d1d7d72fee4c5d0c9c7acc66e60899e30c9"
+    },
+    {
+      "file": "vendor/js/lucide.js",
+      "source_sha256": "187a756625c5ce7499c207d1b0d1cf4e1ab95e3f666c7e0cd0fafc3e6842d040"
+    },
+    {
+      "file": "vendor/css/fonts.css",
+      "source_sha256": "f2bdaa899c2224e824c3737648c3d92b41bc4bdd810c17062f2b8c6ee71d8e93"
+    },
+    {
+      "file": "js/i18n/api-settings.js",
+      "source_sha256": "0d0160a3f6f801293c1ba1fc80576a5b74111ee279a359f84bf5b5a35e73f420"
+    },
+    {
+      "file": "js/i18n/canvas.js",
+      "source_sha256": "7590cc91fb64f0fa9182a799870e52d73a07199e70115162cb7310ea878e8e51"
+    },
+    {
+      "file": "js/i18n/comfyui-settings.js",
+      "source_sha256": "0a316fa932eee76650ad547625d03b50b57d80a424a9d4e17b32572ae2658a32"
+    },
+    {
+      "file": "js/i18n/common.js",
+      "source_sha256": "c6927ec1f16a3e0c955a01e82453b67ad89e2d283ade54e6b8c384b7b3645e51"
+    },
+    {
+      "file": "js/i18n/smart-canvas.js",
+      "source_sha256": "c38666706986a3cc7ba9fa5eeb9be8624dd1cc7fe2ece7639336ba06e0ed87d7"
+    },
+    {
+      "file": "js/i18n/studio.js",
+      "source_sha256": "df6c945316d54cabef6fc93c97a13b4139cb6e947aa7702073baef8127edfe15"
+    },
+    {
+      "file": "js/i18n/validate-i18n.js",
+      "source_sha256": "e31100d03db688576fbcb32d8d8554aea0ffa826d32bf24873e0578966cc7d54"
+    },
+    {
+      "file": "vendor/fonts/inter-1.ttf",
+      "source_sha256": "eec66af7f2337bd34fe6e801cf92ededcb57a20c0d7bc40a61d4eefcbe3dd40c"
+    },
+    {
+      "file": "vendor/fonts/inter-2.ttf",
+      "source_sha256": "e7a1aaf7eda9f2fad4131725fa556265ec75ca7b2d756260173a040363e8d4f7"
+    },
+    {
+      "file": "vendor/fonts/inter-3.ttf",
+      "source_sha256": "8c883f63b2c4157d997319f2c8bc6995ed4357ef371940d31ca159004a4aae63"
+    },
+    {
+      "file": "vendor/fonts/inter-4.ttf",
+      "source_sha256": "1b08e7fc267a5c7e1d614100f604b83e7e8a0be241f0f288faa2b3ac93a683ba"
+    },
+    {
+      "file": "vendor/fonts/inter-5.ttf",
+      "source_sha256": "d0f4bc7faca468376e3db9b5e57afcdc2192134c9ac82a9511f32767b56853a4"
+    },
+    {
+      "file": "vendor/fonts/jetbrains-mono-6.ttf",
+      "source_sha256": "a1d92abc6b02a87faed23d98067ab1027e8e95242fd7c9978a072ea383b89d1a"
+    },
+    {
+      "file": "vendor/fonts/jetbrains-mono-7.ttf",
+      "source_sha256": "44ce4a84f20d60f24539bd0cef11f79c29e38609e0f8adf18551c9794a5d9dc3"
+    },
+    {
+      "file": "vendor/fonts/space-grotesk-10.ttf",
+      "source_sha256": "3e699ead1876244fa392243054ddefe7cf631b488438828a8a100731a22ab995"
+    },
+    {
+      "file": "vendor/fonts/space-grotesk-8.ttf",
+      "source_sha256": "3e756954468ff1cb302dae0414262e72f76a67d87bef3fa1f3226cd0fb9b2d85"
+    },
+    {
+      "file": "vendor/fonts/space-grotesk-9.ttf",
+      "source_sha256": "2f29b31d803a928d21f96dbe7a5f8bfa5c5c98917736c2d195bc7c737bc906ba"
+    }
+  ]
+}

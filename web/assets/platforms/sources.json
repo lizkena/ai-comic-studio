@@ -1,0 +1,104 @@
+{
+  "downloaded_at": "2026-10-03",
+  "assets": [
+    {
+      "id": "qwen",
+      "website": "https://qwen.ai",
+      "asset_url": "https://img.alicdn.com/imgextra/i4/O1CN01OXv3EM1FN8t9W4P79_!!6000000000474-2-tps-80-80.png",
+      "file": "qwen.png",
+      "sha256": "cd9390bc4209c319121d111f3a1f535b3c7dd909b8f860d41acc9744138d58df",
+      "dimensions": [
+        80,
+        80
+      ]
+    },
+    {
+      "id": "mimo",
+      "website": "https://mimo.mi.com",
+      "asset_url": "https://mimo.mi.com/favicon.png",
+      "file": "mimo.png",
+      "sha256": "30f5305380e8a2f85c652b905ef5e155e0c00c7d56d7ab6bd8b1eb40dad61ba7",
+      "dimensions": [
+        535,
+        534
+      ]
+    },
+    {
+      "id": "deepseek",
+      "website": "https://www.deepseek.com",
+      "asset_url": "https://www.deepseek.com/favicon.ico",
+      "file": "deepseek.png",
+      "sha256": "30a4420e6e4dcb17fd7de560c5004346c2bc8cd971d2d5f5ee15326603e51321",
+      "dimensions": [
+        225,
+        225
+      ]
+    },
+    {
+      "id": "ark",
+      "website": "https://www.volcengine.com",
+      "asset_url": "https://portal.volccdn.com/obj/volcfe/misc/favicon.png",
+      "file": "ark.png",
+      "sha256": "187b85612796c9def2a0f328538bf249fd62d549379b44a68ed9fa949b531b9f",
+      "dimensions": [
+        192,
+        192
+      ]
+    },
+    {
+      "id": "glm",
+      "website": "https://www.bigmodel.cn",
+      "asset_url": "https://www.bigmodel.cn/static/images/favicon.png",
+      "file": "glm.png",
+      "sha256": "94ff9c00af67774e5178428942a6e0a9952c7e2f3aba4c25f3b05c782841ee4c",
+      "dimensions": [
+        90,
+        90
+      ]
+    },
+    {
+      "id": "kimi-light",
+      "website": "https://www.kimi.com",
+      "asset_url": "https://www.kimi.com/favicon-light.ico",
+      "file": "kimi-light.png",
+      "sha256": "df91c1ecf1d4894cf05845cdce44549ed3ccca3478b97a70972d1bc82ac4f2d1",
+      "dimensions": [
+        48,
+        48
+      ]
+    },
+    {
+      "id": "kimi-dark",
+      "website": "https://www.kimi.com",
+      "asset_url": "https://www.kimi.com/favicon-dark.ico",
+      "file": "kimi-dark.png",
+      "sha256": "15d85f11f45568ffbf4e02311aa1cfba27e28bd18288e02ea754246de9bb08a0",
+      "dimensions": [
+        48,
+        48
+      ]
+    },
+    {
+      "id": "minimax",
+      "website": "https://www.minimax.io",
+      "asset_url": "https://www.minimax.io/favicon.ico",
+      "file": "minimax.png",
+      "sha256": "43ce4c9b9e627b391a116cd5da09e4c062d9c4e3d585509c65a4a3d16f386256",
+      "dimensions": [
+        32,
+        32
+      ]
+    },
+    {
+      "id": "jimeng",
+      "website": "https://jimeng.jianying.com",
+      "asset_url": "https://lf3-lv-buz.vlabstatic.com/obj/image-lvweb-buz/common/images/dreamina-v1.ico",
+      "file": "jimeng.png",
+      "sha256": "1526054322006955f0bb748c45af230c57bff29a188c463169ee0ac0b2406203",
+      "dimensions": [
+        64,
+        64
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "storyboard-director-15s",
+  "name": "分镜导演 · 15秒版",
+  "stage": "storyboard",
+  "version": "1.0.0-adapter.1",
+  "availability": "完整可用",
+  "tools": [
+    "text_api"
+  ],
+  "input": "指定阶段的项目事实与原文",
+  "output": "调用方规定的 JSON 或编译后的画面提示词",
+  "source_package": "分镜师_15秒版_SKILL完整版.md",
+  "segment_duration": 15
+}

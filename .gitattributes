@@ -1,0 +1,19 @@
+# 仓库内统一 LF：Windows 开发机与 Linux CI 行为一致
+* text=auto eol=lf
+
+# 明确二进制：禁止任何行尾转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.svg text eol=lf
+*.sqlite3 binary
+*.db binary
+*.zip binary
+*.mp3 binary
+*.wav binary
+*.mp4 binary
+*.mov binary
+*.pdf binary

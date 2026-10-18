@@ -1,0 +1,15 @@
+{
+  "id": "film-assets-general",
+  "name": "资产架构师 · 通用版",
+  "stage": "assets",
+  "version": "1.0.0-adapter.1",
+  "availability": "完整可用",
+  "tools": [
+    "text_api",
+    "image_api"
+  ],
+  "input": "指定阶段的项目事实与原文",
+  "output": "调用方规定的 JSON 或编译后的画面提示词",
+  "source_package": "顶级真人剧 AI 资产库架构师总指令通用版。.txt",
+  "image_mode": "compiled"
+}

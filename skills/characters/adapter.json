@@ -1,0 +1,12 @@
+{
+  "id": "characters",
+  "name": "定人物",
+  "stage": "characters",
+  "version": "1.0.0",
+  "availability": "完整可用",
+  "tools": [
+    "text_api"
+  ],
+  "input": "项目设定与前序结构化对象",
+  "output": "本阶段 JSON 结构"
+}

@@ -1,0 +1,141 @@
+{
+  "id": "seedance-combat",
+  "name": "打斗动作与运镜 · 平台适配",
+  "description": "整理攻防动作、受力反馈、兵器握持和镜间状态；按需补充群战与幻想动作，保留项目视觉风格。",
+  "version": "1.0.1",
+  "enabled": true,
+  "priority": 20,
+  "stages": [
+    "storyboard"
+  ],
+  "task_types": [
+    "breakdown",
+    "shot_prompt",
+    "video_prompt"
+  ],
+  "keywords": [
+    "打斗",
+    "武打",
+    "搏斗",
+    "格斗",
+    "交战",
+    "交锋",
+    "对打",
+    "挥拳",
+    "拳击",
+    "格挡",
+    "踢击",
+    "挥刀",
+    "挥剑",
+    "剑斗",
+    "肉搏",
+    "近战",
+    "缠斗",
+    "围攻",
+    "群战",
+    "斧劈",
+    "挥斧",
+    "劈砍",
+    "劈入",
+    "劈进",
+    "劈翻",
+    "边打边退",
+    "边战边退",
+    "且战且退",
+    "持械交战",
+    "刀砍",
+    "剑刺",
+    "刺击",
+    "砍杀",
+    "反击",
+    "招架",
+    "拳打脚踢",
+    "出拳",
+    "踢腿",
+    "扫腿",
+    "肘击",
+    "膝击",
+    "摔投",
+    "扑击",
+    "撕咬",
+    "combat",
+    "fight"
+  ],
+  "references": {
+    "breakdown": [
+      "references/actions.md",
+      "references/camera.md"
+    ],
+    "shot_prompt": [
+      "references/actions.md",
+      "references/camera.md"
+    ],
+    "video_prompt": [
+      "references/actions.md",
+      "references/camera.md"
+    ]
+  },
+  "reference_rules": [
+    {
+      "task_types": [
+        "breakdown",
+        "shot_prompt",
+        "video_prompt"
+      ],
+      "keywords": [
+        "刀",
+        "剑",
+        "长枪",
+        "棍",
+        "斧",
+        "鞭",
+        "盾",
+        "兵器",
+        "weapon"
+      ],
+      "files": [
+        "references/weapons.md"
+      ]
+    },
+    {
+      "task_types": [
+        "breakdown",
+        "shot_prompt",
+        "video_prompt"
+      ],
+      "keywords": [
+        "群战",
+        "围攻",
+        "围敌",
+        "混战",
+        "合围",
+        "多人",
+        "以一敌多"
+      ],
+      "files": [
+        "references/groups.md"
+      ]
+    },
+    {
+      "task_types": [
+        "breakdown",
+        "shot_prompt",
+        "video_prompt"
+      ],
+      "keywords": [
+        "法术",
+        "灵气",
+        "剑气",
+        "御剑",
+        "踏剑",
+        "瞬移",
+        "超能力",
+        "能量球",
+        "空战"
+      ],
+      "files": [
+        "references/fantasy.md"
+      ]
+    }
+  ]
+}
